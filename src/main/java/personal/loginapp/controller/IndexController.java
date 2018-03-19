@@ -25,6 +25,9 @@ public class IndexController {
         log.info("loginname="+loginname);
         log.info("password="+password);
         log.info("appInfo="+indexService.getAppInfo());
+        for(Object[] objs : indexService.getInfo()){
+            System.out.println(objs);
+        }
         return "index";
     }
 
