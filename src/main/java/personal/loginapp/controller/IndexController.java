@@ -5,7 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import personal.loginapp.entity.BaseEntity;
 import personal.loginapp.service.IndexService;
+import personal.loginapp.service.impl.IndexServiceImpl;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author 刘晨
@@ -38,5 +44,11 @@ public class IndexController {
         return "indexH";
     }
 
+    @RequestMapping(value = "/insertBase" ,method = {RequestMethod.POST})
+    @ResponseBody
+    public String insertBase(BaseEntity baseEntity){
+        baseEntity.setTempCol2(new Timestamp(new Date().getTime()));
+        return ""+indexService.insertBase(baseEntity);
+    }
 
 }
