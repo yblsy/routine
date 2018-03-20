@@ -1,5 +1,6 @@
 package spring.config;
 
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -15,7 +17,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.DriverManager;
 import java.util.Properties;
 
 /**
@@ -63,7 +67,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         return commonsMultipartResolver;
     }
 
-    @Bean
+    @Bean(name = "prop")
     public PropertiesFactoryBean propertiesFactoryBean(){
         PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
         propertiesFactoryBean.setLocations(new ClassPathResource("/conf/conf.properties"),new ClassPathResource("/conf/jdbc.properties"));
@@ -71,11 +75,23 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     }
 
     @Bean
-    public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer(Properties propertiesFactoryBean){
+    public PropertyPlaceholderConfigurer propertyPlaceholderConfigurer(Properties prop){
         PropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new PropertyPlaceholderConfigurer();
-        propertyPlaceholderConfigurer.setProperties(propertiesFactoryBean);
+        propertyPlaceholderConfigurer.setProperties(prop);
         return propertyPlaceholderConfigurer;
     }
+
+    @Bean
+    public DataSource dataSource(Properties prop){
+        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+        driverManagerDataSource.setDriverClassName(prop.getProperty("jdbc.driver"));
+        driverManagerDataSource.setUrl(prop.getProperty("jdbc.url"));
+        driverManagerDataSource.setUsername(prop.getProperty("jdbc.username"));
+        driverManagerDataSource.setPassword(prop.getProperty("jdbc.password"));
+        return driverManagerDataSource;
+    }
+
+    public SqlSessionFactoryBean
 
     /**
      * 配置静态资源的处理
