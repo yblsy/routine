@@ -2,7 +2,6 @@ package personal.loginapp.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +25,14 @@ public class IndexController {
         log.info("password="+password);
         log.info("appInfo="+indexService.getAppInfo());
         return "index";
+    }
+
+    @RequestMapping(value = "/indexHtml",method = {RequestMethod.GET})
+    public String toIndexHtml(String loginname,String password){
+        log.info("loginname="+loginname);
+        log.info("password="+password);
+        log.info("appInfo="+indexService.getAppInfo());
+        return "indexH";
     }
 
 

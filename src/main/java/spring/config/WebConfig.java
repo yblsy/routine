@@ -32,14 +32,28 @@ public class WebConfig extends WebMvcConfigurerAdapter{
      * 该类为视图解析器
      * @return
      */
-    @Bean
-    public ViewResolver internalResourceViewResolver(){
+    //
+    // @Bean
+    public ViewResolver internalResourceViewResolverJsp(){
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         //解析器的前缀
-        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setPrefix("/WEB-INF/views jsp/");
         //解析器的后缀
         resolver.setSuffix(".jsp");
         resolver.setExposePathVariables(true);
+        resolver.setOrder(1);
+        return resolver;
+    }
+
+    @Bean
+    public ViewResolver internalResourceViewResolverHtml(){
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        //解析器的前缀
+        resolver.setPrefix("/WEB-INF/views html/");
+        //解析器的后缀
+        resolver.setSuffix(".html");
+        resolver.setExposePathVariables(true);
+        resolver.setOrder(2);
         return resolver;
     }
 
@@ -49,7 +63,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         return commonsMultipartResolver;
     }
 
-    @Bean(name = "prop")
+    @Bean
     public PropertiesFactoryBean propertiesFactoryBean(){
         PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
         propertiesFactoryBean.setLocations(new ClassPathResource("/conf/conf.properties"),new ClassPathResource("/conf/jdbc.properties"));
@@ -57,9 +71,9 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     }
 
     @Bean
-    public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer(Properties prop){
+    public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer(Properties propertiesFactoryBean){
         PropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new PropertyPlaceholderConfigurer();
-        propertyPlaceholderConfigurer.setProperties(prop);
+        propertyPlaceholderConfigurer.setProperties(propertiesFactoryBean);
         return propertyPlaceholderConfigurer;
     }
 
