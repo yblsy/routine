@@ -111,7 +111,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setTypeAliasesPackage("personal.loginapploginapp.entity");
         //sqlSessionFactoryBean.setTypeAliasesSuperType(BaseEntity.class);
-        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("/sqlMapperXml/*mapper.xml"));
+        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("/sqlMapperXml/*Mapper.xml"));
         sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("/mybatis/mybatis-config.xml"));
         return sqlSessionFactoryBean;
     }
