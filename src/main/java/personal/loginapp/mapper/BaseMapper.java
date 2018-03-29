@@ -1,8 +1,8 @@
-package personal.loginapp.mapper;/**
+package personal.loginapp.mapper;
+/**
  * Created by liuchen on 2018/3/20.
  */
 
-import org.springframework.stereotype.Repository;
 import personal.loginapp.entity.BaseEntity;
 
 /**

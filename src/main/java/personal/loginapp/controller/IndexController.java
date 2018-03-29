@@ -44,11 +44,16 @@ public class IndexController {
         return "indexH";
     }
 
-    @RequestMapping(value = "/insertBase" ,method = {RequestMethod.POST})
+    @RequestMapping(value = "/insertBase" ,method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public String insertBase(BaseEntity baseEntity){
         baseEntity.setTempCol2(new Timestamp(new Date().getTime()));
         return ""+indexService.insertBase(baseEntity);
+    }
+
+    @RequestMapping(value = "/abc",produces = "application/json;charset=utf-8")
+    public String getUserList(){
+        return null;
     }
 
 }
