@@ -18,4 +18,5 @@
     <mvc:resources mapping="/react/**" location="/WEB-INF/resources/js/react/"/>
     <mvc:resources mapping="/babel/**" location="/WEB-INF/resources/js/babel/"/>
     <mvc:resources mapping="/application/**" location="/WEB-INF/resources/js/application/"/>
+    <mvc:resources mapping="/jquery/**" location="/WEB-INF/resources/js/jquery/"/>
 </beans>
