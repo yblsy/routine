@@ -3,8 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" src="/jquery/jquery-3.3.1.js"></script>
 </head>
 <body>
-    <h2>Hello World!HTML5</h2>
+    <form action="/routine/react/oprRedisSet" method="post">
+        key:<input type="text" name="key" value=""/><br/>
+        value:<input type="text" name="value" value=""/>
+        <input type="submit" value="submit"/>
+    </form>
+    <hr/>
+    <input type="text" id="key" value=""/>
+    <input type="button" value="get"/>
 </body>
+
+<script type="text/javascript">
+
+    $(function(){
+        $('input:button').bind('click',function(){
+            $.ajax({
+                url:'/routine/react/oprRedisGet',
+                async : false,
+                type:'post',
+                data:{
+                    key:$('#key').val()
+                },
+                dataType:'json',
+                success:function(data){
+                    console.log(data);
+                    alert(data.value);
+                }
+            })
+        })
+    })
+</script>
+
 </html>

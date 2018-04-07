@@ -1,13 +1,18 @@
 package spring.config;
 
+import com.google.gson.Gson;
+import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.*;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.multipart.MultipartResolver;
@@ -17,9 +22,11 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import redis.clients.jedis.JedisPoolConfig;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Properties;
 
 /**
@@ -29,7 +36,7 @@ import java.util.Properties;
  **/
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"personal.loginapp"})
+@ComponentScan(basePackages = {"personal.loginapp", "personal.commons"})
 @ImportResource({"classpath:/spring/spring-mvc.xml"})
 public class WebConfig extends WebMvcConfigurerAdapter{
 
@@ -59,7 +66,9 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     @Bean(name = "prop")
     public PropertiesFactoryBean propertiesFactoryBeanMyself(){
         PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
-        propertiesFactoryBean.setLocations(new ClassPathResource("/conf/conf.properties"),new ClassPathResource("/conf/jdbc-myself.properties"));
+        propertiesFactoryBean.setLocations(new ClassPathResource("/conf/conf.properties"),
+                new ClassPathResource("/conf/jdbc-myself.properties"),
+                new ClassPathResource("/conf/redis-myself.properties"));
         return propertiesFactoryBean;
     }
 
@@ -67,7 +76,9 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     @Bean(name = "prop")
     public PropertiesFactoryBean propertiesFactoryBeanRuntong(){
         PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
-        propertiesFactoryBean.setLocations(new ClassPathResource("/conf/conf.properties"),new ClassPathResource("/conf/jdbc-runtong.properties"));
+        propertiesFactoryBean.setLocations(new ClassPathResource("/conf/conf.properties"),
+                new ClassPathResource("/conf/jdbc-runtong.properties"),
+                new ClassPathResource("/conf/redis-runtong.properties"));
         return propertiesFactoryBean;
     }
 
@@ -125,7 +136,47 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
         mapperScannerConfigurer.setBasePackage("personal.loginapp.mapper");
+        mapperScannerConfigurer.setAnnotationClass(Mapper.class);
         return mapperScannerConfigurer;
+    }
+
+    /**
+     * 配置Redis
+     * @return
+     */
+    @Bean
+    public JedisPoolConfig jedisPoolConfig(Properties prop){
+        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        jedisPoolConfig.setMaxIdle(Integer.parseInt(prop.getProperty("redis.maxIdle")));
+        jedisPoolConfig.setMaxWaitMillis(Integer.parseInt(prop.getProperty("redis.maxWait")));
+        jedisPoolConfig.setTestOnBorrow(Boolean.parseBoolean(prop.getProperty("redis.testOnBorrow")));
+        return jedisPoolConfig;
+    }
+
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory(Properties prop,JedisPoolConfig jedisPoolConfig){
+        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(jedisPoolConfig);
+        jedisConnectionFactory.setHostName(prop.getProperty("redis.hostname"));
+        jedisConnectionFactory.setPort(Integer.parseInt(prop.getProperty("redis.port")));
+        jedisConnectionFactory.setPassword(prop.getProperty("redis.password"));
+        return jedisConnectionFactory;
+    }
+
+    @Bean
+    public RedisTemplate<String,Object> redisTemplate(RedisConnectionFactory redisConnectionFactory){
+        RedisTemplate<String,Object> redisTemplate = new RedisTemplate<String, Object>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+        return redisTemplate;
+    }
+
+//    @Bean
+//    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory){
+//        return new StringRedisTemplate(redisConnectionFactory);
+//    }
+
+    @Bean
+    public Gson gson(){
+        return new Gson();
     }
 
     /**
