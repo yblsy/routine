@@ -3,6 +3,7 @@ package personal.loginapp.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -13,7 +14,9 @@ import java.sql.Timestamp;
  **/
 @Getter
 @Setter
-public class BaseEntity {
+public class BaseEntity implements Serializable{
+
+    private static final long serialVersionUID = 8350109295011593559L;
 
     private String tempCol1;
 

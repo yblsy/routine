@@ -22,38 +22,37 @@ import java.util.Date;
 @Slf4j
 public class IndexController {
 
-    @Autowired
-    private IndexService indexService;
-
-    @RequestMapping(value = "/index",method = {RequestMethod.GET})
-    public String toIndex(String loginname,String password){
-        log.info("loginname="+loginname);
-        log.info("password="+password);
-        log.info("appInfo="+indexService.getAppInfo());
-        for(Object[] objs : indexService.getInfo()){
-            System.out.println(objs);
-        }
-        return "index";
-    }
-
-    @RequestMapping(value = "/indexHtml",method = {RequestMethod.GET})
-    public String toIndexHtml(String loginname,String password){
-        log.info("loginname="+loginname);
-        log.info("password="+password);
-        log.info("appInfo="+indexService.getAppInfo());
-        return "indexH";
-    }
-
-    @RequestMapping(value = "/insertBase" ,method = {RequestMethod.POST,RequestMethod.GET})
-    @ResponseBody
-    public String insertBase(BaseEntity baseEntity){
-        baseEntity.setTempCol2(new Timestamp(new Date().getTime()));
-        return ""+indexService.insertBase(baseEntity);
-    }
-
-    @RequestMapping(value = "/abc",produces = "application/json;charset=utf-8")
-    public String getUserList(){
-        return null;
-    }
+//    private IndexService indexService;
+//
+//    @RequestMapping(value = "/index",method = {RequestMethod.GET})
+//    public String toIndex(String loginname,String password){
+//        log.info("loginname="+loginname);
+//        log.info("password="+password);
+//        log.info("appInfo="+indexService.getAppInfo());
+//        for(Object[] objs : indexService.getInfo()){
+//            System.out.println(objs);
+//        }
+//        return "index";
+//    }
+//
+//    @RequestMapping(value = "/indexHtml",method = {RequestMethod.GET})
+//    public String toIndexHtml(String loginname,String password){
+//        log.info("loginname="+loginname);
+//        log.info("password="+password);
+//        log.info("appInfo="+indexService.getAppInfo());
+//        return "indexH";
+//    }
+//
+//    @RequestMapping(value = "/insertBase" ,method = {RequestMethod.POST,RequestMethod.GET})
+//    @ResponseBody
+//    public String insertBase(BaseEntity baseEntity){
+//        baseEntity.setTempCol2(new Timestamp(new Date().getTime()));
+//        return ""+indexService.insertBase(baseEntity);
+//    }
+//
+//    @RequestMapping(value = "/abc",produces = "application/json;charset=utf-8")
+//    public String getUserList(){
+//        return null;
+//    }
 
 }

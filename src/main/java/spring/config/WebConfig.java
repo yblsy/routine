@@ -1,7 +1,11 @@
 package spring.config;
 
+import com.baomidou.mybatisplus.entity.GlobalConfiguration;
+import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
 import com.google.gson.Gson;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
@@ -117,15 +121,43 @@ public class WebConfig extends WebMvcConfigurerAdapter{
      * @param dataSource
      * @return
      */
+//    @Bean
+//    public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) throws IOException{
+//        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+//        sqlSessionFactoryBean.setDataSource(dataSource);
+//        sqlSessionFactoryBean.setTypeAliasesPackage("personal.loginapploginapp.entity");
+//        //sqlSessionFactoryBean.setTypeAliasesSuperType(BaseEntity.class);
+//        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("/sqlMapperXml/*Mapper.xml"));
+//        sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("/mybatis/mybatis-config.xml"));
+//        return sqlSessionFactoryBean;
+//    }
+
     @Bean
-    public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) throws IOException{
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(dataSource);
-        sqlSessionFactoryBean.setTypeAliasesPackage("personal.loginapploginapp.entity");
-        //sqlSessionFactoryBean.setTypeAliasesSuperType(BaseEntity.class);
-        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("/sqlMapperXml/*Mapper.xml"));
-        sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("/mybatis/mybatis-config.xml"));
-        return sqlSessionFactoryBean;
+    public PaginationInterceptor paginationInterceptor(){
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        paginationInterceptor.setDialectType("mysql");
+        return paginationInterceptor;
+    }
+
+    @Bean
+    public GlobalConfiguration globalConfiguration(){
+        GlobalConfiguration globalConfiguration = new GlobalConfiguration();
+        globalConfiguration.setIdType(2);
+        globalConfiguration.setDbType("mysql");
+        globalConfiguration.setDbColumnUnderline(true);
+        return globalConfiguration;
+    }
+
+    @Bean
+    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean(DataSource dataSource,PaginationInterceptor paginationInterceptor,GlobalConfiguration globalConfiguration) throws IOException{
+        MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
+        mybatisSqlSessionFactoryBean.setDataSource(dataSource);
+        mybatisSqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("/sqlMapperXml/*Mapper.xml"));
+        mybatisSqlSessionFactoryBean.setConfigLocation(new ClassPathResource("/mybatis/mybatis-config.xml"));
+        mybatisSqlSessionFactoryBean.setTypeAliasesPackage("personal.loginapploginapp.entity");
+        mybatisSqlSessionFactoryBean.setPlugins(new Interceptor[]{paginationInterceptor});
+        mybatisSqlSessionFactoryBean.setGlobalConfig(globalConfiguration);
+        return mybatisSqlSessionFactoryBean;
     }
 
     /**
@@ -135,7 +167,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer(){
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
+        mapperScannerConfigurer.setSqlSessionFactoryBeanName("mybatisSqlSessionFactoryBean");
         mapperScannerConfigurer.setBasePackage("personal.loginapp.mapper");
         mapperScannerConfigurer.setAnnotationClass(Mapper.class);
         return mapperScannerConfigurer;
