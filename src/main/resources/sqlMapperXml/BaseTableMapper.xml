@@ -1,6 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="personal.loginapp.mapper.BaseMapper">
+<mapper namespace="personal.loginapp.mapper.BaseTableMapper">
 
     <insert id="insertBase" parameterType="personal.loginapp.entity.BaseEntity">
       INSERT INTO temp_tab (temp_col1,temp_col2,temp_col3,temp_col4)

@@ -16,8 +16,8 @@ import personal.loginapp.service.impl.IndexServiceImpl;
 @Slf4j
 public class StartupListener implements ApplicationListener<ContextRefreshedEvent> {
 
-    @Autowired
-    private IndexServiceImpl indexService;
+    //@Autowired
+    //private IndexServiceImpl indexService;
 
 //    @PostConstruct
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
