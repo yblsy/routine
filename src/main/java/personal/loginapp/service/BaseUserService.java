@@ -9,5 +9,10 @@ import personal.loginapp.entity.BaseUsers;
  **/
 public interface BaseUserService {
 
+    /**
+     * 只供注册使用
+     * @param baseUsers
+     * @return
+     */
     BaseUsers addBaseUsers(BaseUsers baseUsers);
 }

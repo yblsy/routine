@@ -29,7 +29,6 @@ public class RegisterController extends BaseController{
 
     @RequestMapping(value = "/do",method = RequestMethod.POST)
     public String reg(BaseUsers baseUsers){
-        baseUsers.setUserId(""+new Date().getTime());
         baseUserService.addBaseUsers(baseUsers);
         return "common/register";
     }

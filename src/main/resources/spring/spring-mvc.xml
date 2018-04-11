@@ -15,8 +15,10 @@
     <!-- 配置 Annotation 驱动，扫描@Transactional注解的类定义事务  -->
     <tx:annotation-driven transaction-manager="dataSourceTransactionManager" proxy-target-class="true"/>
 
+    <!--静态资源映射-->
     <mvc:resources mapping="/react/**" location="/WEB-INF/resources/js/react/"/>
     <mvc:resources mapping="/babel/**" location="/WEB-INF/resources/js/babel/"/>
     <mvc:resources mapping="/application/**" location="/WEB-INF/resources/js/application/"/>
     <mvc:resources mapping="/jquery/**" location="/WEB-INF/resources/js/jquery/"/>
+    <mvc:resources mapping="/commons/**" location="/WEB-INF/resources/js/commons/"/>
 </beans>
