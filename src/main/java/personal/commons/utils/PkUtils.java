@@ -20,7 +20,7 @@ public class PkUtils {
      * @return
      */
     private static String randomNum(){
-        return "" + (Math.random()*9+1) * 100000;
+        return "" + (int)((Math.random()*9+1) * 100000);
     }
 
     /**
@@ -30,4 +30,5 @@ public class PkUtils {
     public static String pk4BaseUsers(){
         return sdf.format(new Date()) + randomNum();
     }
+
 }

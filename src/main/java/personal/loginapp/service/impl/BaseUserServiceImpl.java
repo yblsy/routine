@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import personal.commons.utils.MD5Utils;
 import personal.commons.utils.PkUtils;
 import personal.loginapp.entity.BaseUsers;
+import personal.loginapp.inner.InnerBaseUsersComponent;
 import personal.loginapp.mapper.BaseUsersMapper;
 import personal.loginapp.service.BaseUserService;
 
@@ -17,19 +18,15 @@ import personal.loginapp.service.BaseUserService;
 @Service
 public class BaseUserServiceImpl implements BaseUserService{
 
-    @Autowired(required = false)
-    private BaseUsersMapper baseUsersMapper;
+    @Autowired
+    private InnerBaseUsersComponent innerBaseUsersComponent;
 
     @Transactional(readOnly = false,rollbackFor = Exception.class)
     public BaseUsers addBaseUsers(BaseUsers baseUsers) {
-        baseUsers.setUserId(PkUtils.pk4BaseUsers());
-        //进行密码加密
-        baseUsers.setPassWord(MD5Utils.MD5(baseUsers.getPassWord()));
-        baseUsersMapper.insert(baseUsers);
-        if(baseUsers.getUserName().equals("liuchen")){
-            baseUsers.setUserName(null);
-            baseUsers.getUserName().toString();
+        if(innerBaseUsersComponent.selectBaseUsersByUserName(baseUsers.getUserName()).size() > 0){
+
         }
+        innerBaseUsersComponent.addUser(baseUsers);
         return baseUsers;
     }
 }
