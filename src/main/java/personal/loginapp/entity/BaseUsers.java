@@ -31,6 +31,9 @@ public class BaseUsers implements Serializable{
     @TableField("nick_name")
     private String nickName;
 
+    @TableField("user_img")
+    private String userImg;
+
     protected Serializable pkVal() {
         return this.userId;
     }

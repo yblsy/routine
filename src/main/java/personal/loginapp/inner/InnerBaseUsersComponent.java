@@ -21,6 +21,11 @@ public class InnerBaseUsersComponent {
     @Autowired(required = false)
     private BaseUsersMapper baseUsersMapper;
 
+    /**
+     * 根据用户名查询用户列表
+     * @param username
+     * @return
+     */
     public List<BaseUsers> selectBaseUsersByUserName(String username){
         EntityWrapper<BaseUsers> entityWrapper = new EntityWrapper<BaseUsers>();
         entityWrapper.eq("user_name",username);

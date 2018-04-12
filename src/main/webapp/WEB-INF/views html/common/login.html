@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script type="text/javascript" src="/jquery/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="/jquery/jquery.form.js"></script>
+    <script type="text/javascript" src="/commons/md5.js"></script>
+</head>
+<body>
+
+    <form action="/user/do" method="post" autocomplete="off">
+        username:<input type="text" name="userName" value=""/>
+        password:<input type="password" name="passWord" value="" autocomplete="new-password"/>
+        <input type="button" value="login"/>
+    </form>
+</body>
+
+<script type="text/javascript">
+    $(function(){
+        $('input:button').on('click',function(){
+            $('input:password[name=\'passWord\']').val(hex_md5($('input:password[name=\'passWord\']').val()));
+            $('form').ajaxSubmit({
+                success : function(){
+                    location.reload();
+                }
+            });
+        })
+    })
+</script>
+
+</html>

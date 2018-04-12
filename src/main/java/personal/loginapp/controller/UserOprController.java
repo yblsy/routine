@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import personal.loginapp.entity.BaseUsers;
 import personal.loginapp.service.BaseUserService;
 
@@ -16,20 +17,32 @@ import java.util.Date;
  **/
 
 @Controller
-@RequestMapping(value = "/user/register")
-public class RegisterController extends BaseController{
+@RequestMapping(value = "/user/")
+public class UserOprController extends BaseController{
 
     @Autowired
     private BaseUserService baseUserService;
 
-    @RequestMapping(value = "/toDo")
+    @RequestMapping(value = "toRegDo")
     public String toRegister(){
         return "common/register";
     }
 
-    @RequestMapping(value = "/do",method = RequestMethod.POST)
+    @RequestMapping(value = "doReg",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    @ResponseBody
     public String reg(BaseUsers baseUsers){
         baseUserService.addBaseUsers(baseUsers);
         return "common/register";
+    }
+
+    @RequestMapping(value = "toLogDo")
+    public String toLogDo(){
+        return "common/login";
+    }
+
+    @RequestMapping(value = "doLog",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    public String log(BaseUsers baseUsers){
+
+        return "common/login";
     }
 }

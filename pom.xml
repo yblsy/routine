@@ -3,7 +3,7 @@
 
 <modelVersion>4.0.0</modelVersion>
   <groupId>personal.liuchen.routine</groupId>
-  <artifactId>login system</artifactId>
+  <artifactId>login-system</artifactId>
   <packaging>war</packaging>
   <version>0.0.0.1</version>
 
@@ -11,6 +11,7 @@
     <spring.version>4.3.1.RELEASE</spring.version>
     <spring-data.version>1.6.1.RELEASE</spring-data.version>
     <redis-client.version>2.9.0</redis-client.version>
+    <exception-tool.version>0.0.0.1</exception-tool.version>
   </properties>
 
   <dependencies>
@@ -162,7 +163,7 @@
     <dependency>
       <groupId>com.baomidou</groupId>
       <artifactId>mybatis-plus</artifactId>
-      <version>2.0.1</version>
+      <version>2.1.4</version>
     </dependency>
     <dependency>
       <groupId>org.apache.velocity</groupId>
@@ -184,6 +185,12 @@
       <version>2.8.2</version>
     </dependency>
 
+    <!--自己的工具包-->
+    <dependency>
+      <groupId>personal.liuchen.common</groupId>
+      <artifactId>exception-tool</artifactId>
+      <version>${exception-tool.version}</version>
+    </dependency>
   </dependencies>
 
   <build>

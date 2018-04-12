@@ -15,4 +15,8 @@ public interface BaseUserService {
      * @return
      */
     BaseUsers addBaseUsers(BaseUsers baseUsers);
+
+    BaseUsers loginBaseUsers(BaseUsers baseUsers);
+
+    BaseUsers resetPassword(BaseUsers baseUsers);
 }
