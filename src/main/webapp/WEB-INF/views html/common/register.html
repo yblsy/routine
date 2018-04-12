@@ -18,7 +18,7 @@
     </form>
 
     <form id="uploadImgForm">
-        upload user imgage:<input type="file" /><input type="button" class="upload-img-btn" value="upload image"/>
+        upload user imgage:<input type="file" name="source"/><input type="button" class="upload-img-btn" value="upload image"/>
     </form>
 
     <input type="button" class="submit-btn" value="reg"/>
@@ -36,21 +36,19 @@
         });
 
         $('input:button[class=\'upload-img-btn\']').on('click',function(){
-            $('#uploadImgForm').submit(function(){
-                var data = new FormData(this);
-                console.log(data);
-                $.ajax({
-                    url: '/foc/fileUpload',
-                    type: 'POST',
-                    data: data,
-                    dataType: 'JSON',
-                    cache: false,
-                    processData: false,
-                    contentType: false,
-                    success:function(data){
-                        alert("UploadFile Success");
-                    }
-                })
+            var data = new FormData($('#uploadImgForm')[0]);
+            console.log(data);
+            $.ajax({
+                url: '/foc/fileUpload',
+                type: 'POST',
+                data: data,
+                dataType: 'JSON',
+                cache: false,
+                processData: false,
+                contentType: false,
+                success:function(data){
+                    alert("UploadFile Success");
+                }
             })
         });
     })
