@@ -28,8 +28,10 @@
         $('input:button[class=\'submit-btn\']').on('click',function(){
             $('input:password[name=\'passWord\']').val(hex_md5($('input:password[name=\'passWord\']').val()));
             $('form').ajaxSubmit({
-                success : function(){
-                    location.reload();
+                success : function(data){
+                    alert("1");
+                    console.log(data);
+                    //location.reload();
                 }
             });
         });

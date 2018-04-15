@@ -1,11 +1,15 @@
 package personal.loginapp.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import personal.commons.handler.LoginRequestAnnotation;
+import personal.exception.LoginAppException;
 import personal.loginapp.entity.BaseUsers;
+import personal.loginapp.model.LoginAppResult;
 import personal.loginapp.service.BaseUserService;
 
 import java.util.Date;
@@ -18,6 +22,7 @@ import java.util.Date;
 
 @Controller
 @RequestMapping(value = "/user/")
+@Slf4j
 public class UserOprController extends BaseController{
 
     @Autowired
@@ -29,10 +34,10 @@ public class UserOprController extends BaseController{
     }
 
     @RequestMapping(value = "doReg",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
-    @ResponseBody
-    public String reg(BaseUsers baseUsers){
-        baseUserService.addBaseUsers(baseUsers);
-        return "common/register";
+    @LoginRequestAnnotation
+    public LoginAppResult reg(BaseUsers baseUsers){
+        BaseUsers bu = baseUserService.addBaseUsers(baseUsers);
+        return LoginAppResult.success(bu,"注册成功");
     }
 
     @RequestMapping(value = "toLogDo")

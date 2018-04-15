@@ -20,6 +20,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -27,11 +28,13 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import personal.commons.handler.OprMethodReturnResultValueHandler;
 import redis.clients.jedis.JedisPoolConfig;
 
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -41,7 +44,7 @@ import java.util.Properties;
  **/
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"personal.loginapp", "personal.commons"})
+@ComponentScan(basePackages = {"personal.loginapp", "personal.commons", "personal.aop"})
 @ImportResource({"classpath:/spring/spring-mvc.xml"})
 public class WebConfig extends WebMvcConfigurerAdapter{
 
@@ -115,22 +118,6 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         dataSourceTransactionManager.setDataSource(dataSource);
         return dataSourceTransactionManager;
     }
-
-    /**
-     * 配置mybatis工厂类
-     * @param dataSource
-     * @return
-     */
-//    @Bean
-//    public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) throws IOException{
-//        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-//        sqlSessionFactoryBean.setDataSource(dataSource);
-//        sqlSessionFactoryBean.setTypeAliasesPackage("personal.loginapploginapp.entity");
-//        //sqlSessionFactoryBean.setTypeAliasesSuperType(BaseEntity.class);
-//        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("/sqlMapperXml/*Mapper.xml"));
-//        sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("/mybatis/mybatis-config.xml"));
-//        return sqlSessionFactoryBean;
-//    }
 
     @Bean
     public PaginationInterceptor paginationInterceptor(){
@@ -207,6 +194,17 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     @Bean
     public Gson gson(){
         return new Gson();
+    }
+
+    @Bean
+    public OprMethodReturnResultValueHandler oprMethodReturnResultValueHandler(){
+        OprMethodReturnResultValueHandler oprMethodReturnResultValueHandler = new OprMethodReturnResultValueHandler();
+        return oprMethodReturnResultValueHandler;
+    }
+
+    @Override
+    public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {
+        returnValueHandlers.add(0,oprMethodReturnResultValueHandler());
     }
 
     /**
