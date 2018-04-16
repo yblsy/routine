@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import personal.commons.handler.LoginRequestAnnotation;
+import personal.annotation.BaseResultAnnotation;
 import personal.exception.LoginAppException;
 import personal.loginapp.entity.BaseUsers;
 import personal.loginapp.model.LoginAppResult;
@@ -34,7 +34,7 @@ public class UserOprController extends BaseController{
     }
 
     @RequestMapping(value = "doReg",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
-    @LoginRequestAnnotation
+    @BaseResultAnnotation
     public LoginAppResult reg(BaseUsers baseUsers){
         BaseUsers bu = baseUserService.addBaseUsers(baseUsers);
         return LoginAppResult.success(bu,"注册成功");

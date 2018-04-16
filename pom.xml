@@ -10,6 +10,7 @@
   <properties>
     <!--自己的工具类-->
     <exception-tool.version>0.0.0.1</exception-tool.version>
+    <unify-tools.version>0.0.0.1</unify-tools.version>
     <!--其他工具-->
     <spring.version>4.3.1.RELEASE</spring.version>
     <spring-data.version>1.6.1.RELEASE</spring-data.version>
@@ -210,6 +211,12 @@
       <groupId>personal.liuchen.common</groupId>
       <artifactId>exception-tool</artifactId>
       <version>${exception-tool.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>personal.liuchen.common</groupId>
+      <artifactId>unify-tools</artifactId>
+      <version>${unify-tools.version}</version>
     </dependency>
   </dependencies>
 

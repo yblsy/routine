@@ -3,6 +3,8 @@ package personal.loginapp.model;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
+import personal.result.BaseResult;
+
 /**
  * @author 刘晨
  * @create 2018-04-13 13:45
