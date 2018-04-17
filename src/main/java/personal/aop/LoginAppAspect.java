@@ -1,13 +1,11 @@
 package personal.aop;
 
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import personal.exception.LoginAppException;
-import personal.loginapp.model.LoginAppResult;
+import personal.commons.model.LoginAppResult;
 
 /**
  * @author 刘晨

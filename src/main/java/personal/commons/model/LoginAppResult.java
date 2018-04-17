@@ -1,4 +1,4 @@
-package personal.loginapp.model;
+package personal.commons.model;
 
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;

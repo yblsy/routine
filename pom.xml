@@ -16,6 +16,7 @@
     <spring-data.version>1.6.1.RELEASE</spring-data.version>
     <redis-client.version>2.9.0</redis-client.version>
     <aspectj.version>1.8.7</aspectj.version>
+    <postgresql.version>9.4-1203-jdbc42</postgresql.version>
   </properties>
 
   <dependencies>
@@ -197,6 +198,13 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>6.0.6</version>
+    </dependency>
+
+    <!--postgresql-->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
     </dependency>
 
     <!--json-->

@@ -5,14 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import personal.annotation.BaseResultAnnotation;
-import personal.exception.LoginAppException;
 import personal.loginapp.entity.BaseUsers;
-import personal.loginapp.model.LoginAppResult;
+import personal.commons.model.LoginAppResult;
 import personal.loginapp.service.BaseUserService;
-
-import java.util.Date;
 
 /**
  * @author 刘晨
