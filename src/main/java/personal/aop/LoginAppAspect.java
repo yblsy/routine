@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
-import personal.exception.LoginAppException;
+import personal.exception.exception.LoginAppException;
 import personal.commons.model.LoginAppResult;
 
 /**
@@ -44,8 +44,4 @@ public class LoginAppAspect {
         log.info("after.......................");
     }
 
-//    @Around("PointCut()")
-//    public void around(JoinPoint joinPoint){
-//        log.info("around.......................");
-//    }
 }

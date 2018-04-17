@@ -44,7 +44,7 @@ import java.util.Properties;
  **/
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"personal.loginapp", "personal.commons", "personal.aop"})
+@ComponentScan(basePackages = {"personal.loginapp", "personal.commons", "personal.aop", "personal.exception"})
 @ImportResource({"classpath:/spring/spring-mvc.xml"})
 public class WebConfig extends WebMvcConfigurerAdapter{
 

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  * To change this template use File | Settings | Editor | File and Code Templates.
  **/
 @Configuration
-@ComponentScan(basePackages = {"personal.loginapp", "personal.commons", "personal.aop"},excludeFilters = {@ComponentScan.Filter(type= FilterType.ANNOTATION,value = EnableWebMvc.class)} )
+@ComponentScan(basePackages = {"personal.loginapp", "personal.commons", "personal.aop", "personal.exception"},excludeFilters = {@ComponentScan.Filter(type= FilterType.ANNOTATION,value = EnableWebMvc.class)} )
 public class RootConfig {
 
 }
