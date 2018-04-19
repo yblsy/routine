@@ -3,10 +3,10 @@ package personal.loginapp.inner;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import personal.commons.utils.MD5Utils;
-import personal.commons.utils.PkUtils;
 import personal.loginapp.entity.BaseUsers;
 import personal.loginapp.mapper.BaseUsersMapper;
+import personal.tools.MD5Utils;
+import personal.tools.PkUtils;
 
 import java.util.List;
 

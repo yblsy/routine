@@ -30,6 +30,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import personal.configurs.EncryptPropertyPlaceholderConfigurer;
 import personal.handler.OprMethodReturnResultValueHandler;
+import personal.tools.DESUtils;
 import personal.tools.FtpUtils;
 import redis.clients.jedis.JedisPoolConfig;
 
@@ -98,17 +99,9 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
         propertiesFactoryBean.setLocations(new ClassPathResource("/conf/conf.properties"),
                 new ClassPathResource("/conf/jdbc-aliyun.properties"),
-                new ClassPathResource("/conf/redis-aliyun.properties"),
-                new ClassPathResource("/conf/ftp-aliyun.properties"));
+                new ClassPathResource("/conf/redis-aliyun.properties"));
         return propertiesFactoryBean;
     }
-
-//    @Bean
-//    public PropertyPlaceholderConfigurer propertyPlaceholderConfigurer(Properties prop){
-//        PropertyPlaceholderConfigurer propertyPlaceholderConfigurer = new PropertyPlaceholderConfigurer();
-//        propertyPlaceholderConfigurer.setProperties(prop);
-//        return propertyPlaceholderConfigurer;
-//    }
 
 //    @Bean
 //    public EncryptPropertyPlaceholderConfigurer encryptPropertyPlaceholderConfigurer(Properties prop){
@@ -220,12 +213,6 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     public OprMethodReturnResultValueHandler oprMethodReturnResultValueHandler(){
         OprMethodReturnResultValueHandler oprMethodReturnResultValueHandler = new OprMethodReturnResultValueHandler();
         return oprMethodReturnResultValueHandler;
-    }
-
-    @Bean
-    public FtpUtils ftpUtils(Properties prop) throws IOException{
-        FtpUtils ftpUtils = new FtpUtils(prop.getProperty("ftp.host"),prop.getProperty("ftp.username"),prop.getProperty("ftp.password"),Integer.parseInt(prop.getProperty("ftp.post")));
-        return ftpUtils;
     }
 
     @Override
