@@ -3,6 +3,7 @@ package spring.config;
 import com.baomidou.mybatisplus.entity.GlobalConfiguration;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
+import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.plugin.Interceptor;
@@ -32,6 +33,7 @@ import personal.configurs.EncryptPropertyPlaceholderConfigurer;
 import personal.handler.OprMethodReturnResultValueHandler;
 import personal.tools.DESUtils;
 import personal.tools.FtpUtils;
+import personal.tools.OSSUtils;
 import redis.clients.jedis.JedisPoolConfig;
 
 import javax.sql.DataSource;
@@ -113,10 +115,10 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     @Bean
     public DataSource dataSource(Properties prop){
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-        driverManagerDataSource.setDriverClassName(prop.getProperty("jdbc.driver"));
-        driverManagerDataSource.setUrl(prop.getProperty("jdbc.url"));
-        driverManagerDataSource.setUsername(prop.getProperty("jdbc.username"));
-        driverManagerDataSource.setPassword(prop.getProperty("jdbc.password"));
+        driverManagerDataSource.setDriverClassName(DESUtils.getDecryptString(prop.getProperty("jdbc.driver")));
+        driverManagerDataSource.setUrl(DESUtils.getDecryptString(prop.getProperty("jdbc.url")) + prop.getProperty("jdbc.url.sufix"));
+        driverManagerDataSource.setUsername(DESUtils.getDecryptString(prop.getProperty("jdbc.username")));
+        driverManagerDataSource.setPassword(DESUtils.getDecryptString(prop.getProperty("jdbc.password")));
         return driverManagerDataSource;
     }
 
@@ -210,6 +212,22 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     }
 
     @Bean
+    public OSSUtils ossUtils(Properties prop){
+        OSSUtils ossUtils = new OSSUtils();
+        ossUtils.setAccessKeyId(DESUtils.getDecryptString(prop.getProperty("oss.accessKeyId")));
+        ossUtils.setAccessKeySecret(DESUtils.getDecryptString(prop.getProperty("oss.accessKeySecret")));
+        ossUtils.setEndPoint(DESUtils.getDecryptString(prop.getProperty("oss.endPoint")));
+        if(!Strings.isNullOrEmpty(prop.getProperty("oss.bucketName"))){
+            ossUtils.setBucketName(DESUtils.getDecryptString(prop.getProperty("oss.bucketName")));
+        }
+        return ossUtils;
+    }
+
+    /**
+     * 处理RequestMapping调用结束之后使用
+     * @return
+     */
+    @Bean
     public OprMethodReturnResultValueHandler oprMethodReturnResultValueHandler(){
         OprMethodReturnResultValueHandler oprMethodReturnResultValueHandler = new OprMethodReturnResultValueHandler();
         return oprMethodReturnResultValueHandler;
@@ -229,5 +247,14 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         //通过调用enable方法，我们来要求DispatcherServlet将对静态资源的请求转发到Servlet容器中默认的Servlet上
         configurer.enable();
     }
+
+//    public static void main(String[] args) {
+//        System.out.println(DESUtils.getEncryptString("oss-cn-shanghai.aliyuncs.com"));
+//        System.out.println(DESUtils.getEncryptString("LTAIgvmuZUI2TSnk"));
+//        System.out.println(DESUtils.getEncryptString("4M5wJsjrcnkxNsBYkmI1Aj08DtdBnf"));
+//        System.out.println(DESUtils.getEncryptString("runtong-test"));
+//
+////        System.out.println(DESUtils.getDecryptString("iOh0Pkc1v42G2L/bCNJGiA12D9U5qupz"));
+//    }
 
 }
