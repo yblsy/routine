@@ -18,6 +18,7 @@
     <aspectj.version>1.8.7</aspectj.version>
     <postgresql.version>9.4-1203-jdbc42</postgresql.version>
     <commons-net.version>1.4.1</commons-net.version>
+    <oss.version>2.8.2</oss.version>
   </properties>
 
   <dependencies>
@@ -210,11 +211,18 @@
       <version>2.8.2</version>
     </dependency>
 
-    <!--ftp包-->
+    <!--&lt;!&ndash;ftp包&ndash;&gt;-->
+    <!--<dependency>-->
+      <!--<groupId>commons-net</groupId>-->
+      <!--<artifactId>commons-net</artifactId>-->
+      <!--<version>${commons-net.version}</version>-->
+    <!--</dependency>-->
+
+    <!--oss-->
     <dependency>
-      <groupId>commons-net</groupId>
-      <artifactId>commons-net</artifactId>
-      <version>${commons-net.version}</version>
+      <groupId>com.aliyun.oss</groupId>
+      <artifactId>aliyun-sdk-oss</artifactId>
+      <version>${oss.version}</version>
     </dependency>
 
     <!--自己的工具包-->

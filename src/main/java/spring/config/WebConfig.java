@@ -101,7 +101,8 @@ public class WebConfig extends WebMvcConfigurerAdapter{
         PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
         propertiesFactoryBean.setLocations(new ClassPathResource("/conf/conf.properties"),
                 new ClassPathResource("/conf/jdbc-aliyun.properties"),
-                new ClassPathResource("/conf/redis-aliyun.properties"));
+                new ClassPathResource("/conf/redis-aliyun.properties"),
+                new ClassPathResource("/conf/file-db-aliyun.properties"));
         return propertiesFactoryBean;
     }
 
@@ -212,6 +213,7 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     }
 
     @Bean
+    @Scope("singleton")
     public OSSUtils ossUtils(Properties prop){
         OSSUtils ossUtils = new OSSUtils();
         ossUtils.setAccessKeyId(DESUtils.getDecryptString(prop.getProperty("oss.accessKeyId")));

@@ -22,7 +22,7 @@ import java.util.Map;
 @Controller
 public class ReactController {
 
-    @Autowired
+    @Autowired(required = false)
     private RedisUtils redisUtils;
 
     @Autowired(required = false)
