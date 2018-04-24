@@ -64,10 +64,4 @@ public class FileOprController {
             ossUtils.close();
         }
     }
-
-
-    public static void main(String[] args) throws IOException{
-        FtpUtils ftpUtils = new FtpUtils("47.100.100.163","root","Wlbrcjs1993",21);
-        ftpUtils.instanceFtpClient();
-    }
 }
